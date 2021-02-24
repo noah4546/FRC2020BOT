@@ -13,8 +13,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.auto.PID;
 
@@ -23,15 +23,15 @@ import frc.robot.auto.PID;
  * 
  * @author Luc Suzuki, Kyla Rowan, Noah Tomkins
  */
-public class Shooter extends SubsystemBase {
+public class Shooter extends Subsystem {
 
   private CANSparkMax SPARK_SHOOTERTURRET = new CANSparkMax(RobotMap.SPARK_SHOOTERTURRET, MotorType.kBrushless);
   private CANSparkMax SPARK_SHOOTERWHEEL = new CANSparkMax(RobotMap.SPARK_SHOOTERWHEEL, MotorType.kBrushless);
 
-  private CANPIDController wheelPIDcontroller = new CANPIDController(SPARK_SHOOTERWHEEL);
+  private CANPIDController wheelPIDcontroller = SPARK_SHOOTERWHEEL.getPIDController();
  
-  private CANEncoder encoderTurret = new CANEncoder(SPARK_SHOOTERTURRET);
-  private CANEncoder encoderWheel = new CANEncoder(SPARK_SHOOTERWHEEL);
+  private CANEncoder encoderTurret = SPARK_SHOOTERTURRET.getEncoder();
+  private CANEncoder encoderWheel = SPARK_SHOOTERWHEEL.getEncoder();
  
   private final double encoderCalTurret = 1.162325;
   private final double encoderCalWheel = 1;
@@ -166,6 +166,12 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter: encoderWheel", getEncoderWheel());
     SmartDashboard.putNumber("Shooter: rpmWheel", getWheelRpm());
     SmartDashboard.putNumber("Shooter: voltage", SPARK_SHOOTERWHEEL.getAppliedOutput());
+
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub
 
   }
 }

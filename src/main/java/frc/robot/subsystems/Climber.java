@@ -14,8 +14,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 
@@ -24,10 +24,10 @@ import frc.robot.RobotMap;
  * 
  * @author Luc Suzuki, Noah Tomkins, Kyla Rowan
  */
-public class Climber extends SubsystemBase {
+public class Climber extends Subsystem {
 
   private CANSparkMax SPARK_LIFT = new CANSparkMax(RobotMap.SPARK_LIFT, MotorType.kBrushless);
-  private CANEncoder encoderLift = new CANEncoder(SPARK_LIFT);
+  private CANEncoder encoderLift = SPARK_LIFT.getEncoder();
 
   private Relay SPIKE_RELAY = new Relay(0);
   public Servo releaseServo = new Servo(1);
@@ -95,5 +95,11 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Climber: Lift Encoder", getEncoder());
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub
+
   }
 }

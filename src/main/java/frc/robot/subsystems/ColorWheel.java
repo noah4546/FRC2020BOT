@@ -15,18 +15,18 @@ import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class ColorWheel extends SubsystemBase {
+public class ColorWheel extends Subsystem {
 
   private CANSparkMax SPARK_COLOREXTEND = new CANSparkMax(RobotMap.SPARK_COLOREXTEND, MotorType.kBrushless);
   private CANSparkMax SPARK_COLORSPINNER = new CANSparkMax(RobotMap.SPARK_COLORSPINNER, MotorType.kBrushless);
 
-  private CANEncoder encoderExtend = new CANEncoder(SPARK_COLOREXTEND);
-  private CANEncoder encoderSpinner = new CANEncoder(SPARK_COLORSPINNER);
+  private CANEncoder encoderExtend = SPARK_COLOREXTEND.getEncoder();
+  private CANEncoder encoderSpinner = SPARK_COLORSPINNER.getEncoder();
 
   private ColorSensorV3 mColorSensorV3 = new ColorSensorV3(I2C.Port.kOnboard);
   private ColorMatch mColorMatch = new ColorMatch();
@@ -140,6 +140,12 @@ public class ColorWheel extends SubsystemBase {
     SmartDashboard.putNumber("Color Wheel: Blue", detectedColor.blue);
     SmartDashboard.putNumber("Color Wheel: Confidence", match.confidence);
     SmartDashboard.putString("Color Wheel: Detected Color", colorString);
+
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub
 
   }
 }

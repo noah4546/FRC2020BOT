@@ -11,8 +11,8 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 /**
@@ -20,7 +20,7 @@ import frc.robot.RobotMap;
  * 
  * @author Luc Suzuki, Kyla Rowan, Noah Tomkins
  */
-public class Drivetrain extends SubsystemBase {
+public class Drivetrain extends Subsystem {
 
   //Setup CANSparkMax Devices
   private CANSparkMax SPARK_FRONTLEFT = new CANSparkMax(RobotMap.SPARK_FRONTLEFT, MotorType.kBrushless);
@@ -29,10 +29,10 @@ public class Drivetrain extends SubsystemBase {
   private CANSparkMax SPARK_BACKRIGHT = new CANSparkMax(RobotMap.SPARK_BACKRIGHT, MotorType.kBrushless);
 
   //Setup CANSparkMax Encoders
-  private CANEncoder encoderFL = new CANEncoder(SPARK_FRONTLEFT);
-  private CANEncoder encoderFR = new CANEncoder(SPARK_FRONTRIGHT);
-  private CANEncoder encoderBL = new CANEncoder(SPARK_BACKLEFT);
-  private CANEncoder encoderBR = new CANEncoder(SPARK_BACKRIGHT);
+  private CANEncoder encoderFL = SPARK_FRONTLEFT.getEncoder();
+  private CANEncoder encoderFR = SPARK_FRONTRIGHT.getEncoder();
+  private CANEncoder encoderBL = SPARK_BACKLEFT.getEncoder();
+  private CANEncoder encoderBR = SPARK_BACKRIGHT.getEncoder();
 
   //private double rampRate = 1;
   private double encoderCal = 2.1628959;
@@ -132,6 +132,12 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Drivetrain: rightVelosity", encoderFR.getVelocity());
     SmartDashboard.putNumber("Drivetrain: leftVelosity", encoderFL.getVelocity());
+
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub
 
   }
 }

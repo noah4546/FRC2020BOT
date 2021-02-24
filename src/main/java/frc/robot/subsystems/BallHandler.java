@@ -11,8 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 /**
@@ -20,7 +20,7 @@ import frc.robot.RobotMap;
  * 
  * @author Luc Suzuki, Noah Tomkins, Kyla Rowan
  */
-public class BallHandler extends SubsystemBase {
+public class BallHandler extends Subsystem {
 
   private TalonSRX[] TALON_BALLS = {
     new TalonSRX(RobotMap.TALON_BALLHANDLE0),
@@ -207,5 +207,11 @@ public class BallHandler extends SubsystemBase {
     SmartDashboard.putNumber("motor2", TALON_BALLS[2].getMotorOutputPercent());
 
     SmartDashboard.putBoolean("latch", latch);
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub
+
   }
 }

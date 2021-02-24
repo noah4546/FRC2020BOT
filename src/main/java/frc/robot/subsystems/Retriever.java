@@ -13,8 +13,8 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 /**
@@ -22,10 +22,10 @@ import frc.robot.RobotMap;
  * 
  * @author Luc Suzuki, Noah Tomkins, Kyla Rowan
  */
-public class Retriever extends SubsystemBase {
+public class Retriever extends Subsystem {
 
   private CANSparkMax SPARK_ARM = new CANSparkMax(RobotMap.SPARK_ARM, MotorType.kBrushless);
-  private CANEncoder encoderArm = new CANEncoder(SPARK_ARM);
+  private CANEncoder encoderArm = SPARK_ARM.getEncoder();
 
   private TalonSRX TALON_BAR = new TalonSRX(RobotMap.TALON_BAR);
 
@@ -78,6 +78,12 @@ public class Retriever extends SubsystemBase {
 
     SmartDashboard.putNumber("Retriever: Arm Encoder", getEncoder());
     SmartDashboard.putNumber("intakeMotor", TALON_BAR.getMotorOutputPercent());
+
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub
 
   }
 }
